@@ -1,35 +1,14 @@
-import time
 from Grid import *
 
 
-def draw_point(win, grid):
+def draw_points(win, grid):
     for pixel in grid:
         pixel.point.draw(win)
 
 
-def update_grid(win, pixel_grid):
-    for i in range(len(pixel_grid)):
-        pixel_grid[i].point.undraw()
-        pixel_grid[i].point.draw(win)
-
-
-def main():
-    win = GraphWin('Sorter', 500, 500)
-    win.setBackground('black')
-
-    txt = Text(Point((500 / 2) + (500 / 4), 20), "swap=0")
-    txt.setTextColor('white')
-    txt.draw(win)
-
-    grid = Grid(500)
-    grid.shuffle()
-
-    draw_point(win, grid.pixel_grid)
-
-    n = len(grid.pixel_grid)
-
-    no_swapped = False
+def bubble_sort(win, grid, txt):
     swap = 0
+    n = len(grid.pixel_grid)
 
     for i in range(n):
         already_sorted = True
@@ -51,7 +30,7 @@ def main():
                 if no_swapped:
                     grid.pixel_grid[j].point.x, grid.pixel_grid[j].point.y = j, j
                 grid.pixel_grid[j].point.draw(win)
-                
+
                 if j == n - i - 2:
                     if no_swapped:
                         grid.pixel_grid[j + 1].point.x, grid.pixel_grid[j + 1].point.y = j + 1, j + 1
@@ -65,6 +44,25 @@ def main():
         if already_sorted:
             break
 
+
+def main():
+    # Window settings
+    win = GraphWin('Sorter', 500, 500)
+    win.setBackground('black')
+
+    # Text settings
+    txt = Text(Point((500 / 2) + (500 / 4), 20), "swap=0")
+    txt.setTextColor('white')
+    txt.draw(win)
+
+    grid = Grid(500)
+    grid.shuffle()
+
+    # Draws all the point on the canvas
+    draw_points(win, grid.pixel_grid)
+
+    # Starts the bubble sorting
+    bubble_sort(win, grid, txt)
     win.getMouse()
     win.close()
 

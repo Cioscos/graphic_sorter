@@ -1,7 +1,9 @@
-from Value import *
 import random
-from graphics import *
+
 import numpy as np
+
+from Value import *
+from graphics import *
 
 
 # Classe per rappresentare la griglia
@@ -11,6 +13,7 @@ class Grid:
         self.pixel_grid = list()
         self.colors = list()
 
+        # Fill colors list of all the gamma of colors of a rainbow
         for i in range(6):
             for j in range(255):
                 if i == 0:
@@ -26,11 +29,18 @@ class Grid:
                 elif i == 5:
                     self.colors.append(color_rgb(255, 0, 255 - j))
 
+    # Clean the grid
     def reset_grid(self):
         self.pixel_grid.clear()
 
+    """
+    Set the pixels of the grid in a random position and
+    assign to each pixel a specific color of the gamma.
+    """
     def shuffle(self):
         self.reset_grid()
+
+        # It creates a linear space of dim dimension spaced from 0 to len of colors list
         linear_space = np.linspace(0, len(self.colors) - 1, num=self.dim)
 
         for i in range(self.dim):
